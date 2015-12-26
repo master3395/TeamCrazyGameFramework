@@ -22,35 +22,52 @@ Creating server-side services is easy. Navigate to the `ServerScriptService.Serv
 the ModuleScript will be how others see it. A simple template of a blank service looks like this:
 ```lua
 local MyService = {
-  Client = {
-    -- RemoteEvents:
-    Events = {"ExampleRemoteEvent"};
-  };
-  -- Server-side events:
-  Events = {"ExampleServerEvent"};
+	Client = {
+		-- RemoteEvents:
+		Events = {"ExampleRemoteEvent"};
+	};
+	-- Server-side events:
+	Events = {"ExampleServerEvent"};
 }
 
 -- All other services in-game:
 local services
 
 function MyService:ServerSideMethod()
-  print("Hi")
+	print("Hi")
 end
 
 function MyService.Client:ClientSideMethod(player)
-  print("Hello " .. player.Name)
-  return "I am the server"
+	print("Hello " .. player.Name)
+	return "I am the server"
 end
 
 -- REQUIRED METHOD:
 function MyService:Start()
-  -- Invoked once all other services have been initialized
+	-- Invoked once all other services have been initialized
+	
+	-- Connect to server event:
+	self.ExampleServerEvent:connect(function(msg)
+		print("Got message:", msg)
+	end)
+	
+	-- Fire server event:
+	self.ExampleServerEvent:Fire("Hello event!")
+	
+	-- Connect to client event:
+	self.Client.ExampleRemoteEvent.OnServerEvent:connect(function(player, msg)
+		print("Got message from " .. player.Name .. ":", msg)
+	end)
+	
+	-- Fire client event:
+	self.Client.ExampleRemoteEvent:FireAllClients("Hello clients!")
+	
 end
 
 -- REQUIRED METHOD:
 function MyService:Init(otherServices)
-  -- Initialize service
-  services = otherServices
+	-- Initialize service
+	services = otherServices
 end
 
 return MyService
@@ -69,24 +86,24 @@ local main
 local services  -- Access to server-side services
 
 function ClientTest:Start()
-  -- Invoked after all other modules have been initialized
-  
-  -- Example mouse click capture:
-  main.Controls.Mouse.ButtonDown:connect(function(btn)
-    if (btn == Enum.UserInputType.MouseButton1) then
-      print("Left clicekd")
-    end
-  end)
-  
-  -- Example service use:
-  local kills = services.DataService:Get("kills") or 0
-      -- That invokes the "Get" method in DataService.Client server-side
+	-- Invoked after all other modules have been initialized
+	
+	-- Example mouse click capture:
+	main.Controls.Mouse.ButtonDown:connect(function(btn)
+		if (btn == Enum.UserInputType.MouseButton1) then
+			print("Left clicekd")
+		end
+	end)
+	
+	-- Example service use:
+	local kills = services.DataService:Get("kills") or 0
+		-- That invokes the "Get" method in DataService.Client server-side
   
 end
 
 function ClientTest:Init(_main)
-  main = _main
-  services = main.Services
+	main = _main
+	services = main.Services
 end
 
 return ClientTest
