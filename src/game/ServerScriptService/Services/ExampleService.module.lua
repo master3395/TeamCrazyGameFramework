@@ -62,14 +62,14 @@ function ExampleService:Start()
 	end)
 	
 	-- Connect to client-side event:
-	self.Client.Events.TestServerEvent.OnServerEvent:connect(function(player, msg)
+	self.Client.Events.TestRemoteEvent.OnServerEvent:connect(function(player, msg)
 		print("Got msg from " .. player.Name .. ": " .. msg)
 	end)
 	
 	-- Fire client-side event periodically:
 	while (true) do
 		wait(5)
-		self.Client.Events.TestServerEvent:FireAllClients("Hello")
+		self.Client.Events.TestRemoteEvent:FireAllClients("Hello")
 	end
 	
 end
