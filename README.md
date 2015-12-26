@@ -82,9 +82,14 @@ by their script names.
 A template for creating new modules here:
 ```lua
 local ClientTest = {}
-local main
-local services  -- Access to server-side services
+local main      -- Table of all client modules within the Main LocalScript (referenced by module name)
+local services  -- Table of all server services (referenced by module name)
 
+function ClientTest:RandomTest()
+	return math.random()
+end
+
+-- REQUIRED METHOD:
 function ClientTest:Start()
 	-- Invoked after all other modules have been initialized
 	
@@ -101,6 +106,7 @@ function ClientTest:Start()
   
 end
 
+-- REQUIRED METHOD:
 function ClientTest:Init(_main)
 	main = _main
 	services = main.Services
