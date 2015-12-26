@@ -12,7 +12,7 @@ http.HttpEnabled = true
 
 
 local filelistUrl = "https://raw.githubusercontent.com/Sleitnick/TeamCrazyGameFramework/master/filelist.txt"
-local filelistStr = http:GetAsync(filelistUrl)
+local filelistStr = http:GetAsync(filelistUrl, true)
 local filelist = {}
 
 local function SplitString(str, sep)
@@ -68,7 +68,7 @@ end
 
 local function DownloadSource(s, path)
 	local sourceUrl = ("https://raw.githubusercontent.com/Sleitnick/TeamCrazyGameFramework/master/%s"):format(path)
-	local source = http:GetAsync(sourceUrl)
+	local source = http:GetAsync(sourceUrl, true)
 	s.Source = source
 end
 
