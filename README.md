@@ -13,7 +13,11 @@ and configuring RemoteFunctions and RemoteEvents! This framework takes care of a
 ## Install & Update
 Copy, paste, and run the code below into the command bar in ROBLOX Studio:
 ```lua
-local f=game:GetService("HttpService")local b=f.HttpEnabled f.HttpEnabled=true local a="https://raw.githubusercontent.com/Sleitnick/TeamCrazyGameFramework/master/filelist.txt"local a=f:GetAsync(a,true)local g={}local function d(b,a)local c={}local a=string.format("([^%s]+)",a)b:gsub(a,function(a)c[#c+1]=a end)return c end g=d(a,"\n")table.sort(g,function(b,a)return(#b<#a)end)print(("\nDownloading %i file%s...\n"):format(#g,#g==1 and""or"s"))local function c(a)local a,b,c=a:match("src/game/(.-)/(.+/)(.+)")local a=game:GetService(a)local f=a for a in b:gmatch("(.-)/")do local b=f:FindFirstChild(a)if(not b)then b=Instance.new("Folder",f)b.Name=a end f=b end local a,b,e=c:match("(.+)%.(.-)%.(.-).lua$")if(not a)then b,e=c:match("(.-)%.(.-).lua$")else for a,a in pairs(d(a,"%."))do local b=f:FindFirstChild(a)assert(b,"Could not find "..f:GetFullName().."."..a)f=b end end e=e:lower()local a=(e=="module"and"ModuleScript"or e=="local"and"LocalScript"or"Script")local c=f:FindFirstChild(b)if(not c)then c=Instance.new(a,f)c.Name=b end return c end local function e(b,a)local a=("https://raw.githubusercontent.com/Sleitnick/TeamCrazyGameFramework/master/%s"):format(a)local a=f:GetAsync(a,true)b.Source=a end local d=#g for a,f in pairs(g)do local b=c(f)print(("[%i / %i] %s"):format(a,d,b:GetFullName()))e(b,f)end f.HttpEnabled=b print("Team Crazy Game Framework downloaded")
+local http = game:GetService("HttpService")
+local enabled = http.HttpEnabled
+http.HttpEnabled = true
+loadstring(http:GetAsync("https://raw.githubusercontent.com/Sleitnick/TeamCrazyGameFramework/master/install.min.lua"))()
+http.HttpEnabled = enabled
 ```
 Running this code again will download new code and update the source code of existing framework scripts to the newest versions.
 
