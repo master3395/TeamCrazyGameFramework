@@ -13,11 +13,11 @@ and configuring RemoteFunctions and RemoteEvents! This framework takes care of a
 ## Install & Update
 Copy, paste, and run the code below into the command bar in ROBLOX Studio:
 ```lua
-local http = game:GetService("HttpService")
-local enabled = http.HttpEnabled
-http.HttpEnabled = true
-loadstring(http:GetAsync("https://raw.githubusercontent.com/Sleitnick/TeamCrazyGameFramework/master/install.min.lua"))()
-http.HttpEnabled = enabled
+local h = game:GetService("HttpService")
+local e = h.HttpEnabled
+h.HttpEnabled = true
+loadstring(h:GetAsync("https://raw.githubusercontent.com/Sleitnick/TeamCrazyGameFramework/master/install.min.lua"))()
+h.HttpEnabled = e
 ```
 Running this code again will download new code and update the source code of existing framework scripts to the newest versions.
 
