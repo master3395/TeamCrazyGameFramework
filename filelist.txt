@@ -9,6 +9,7 @@ src/game/ServerScriptService/Services/ExampleService.module.lua
 src/game/ServerScriptService/Services/PointsService.module.lua
 src/game/ServerScriptService/Services/RunServices.script.lua
 src/game/ServerScriptService/Services/StoreService.module.lua
+src/game/StarterPlayer/StarterPlayerScripts/Main.Bezier.module.lua
 src/game/StarterPlayer/StarterPlayerScripts/Main.Controls.Keyboard.module.lua
 src/game/StarterPlayer/StarterPlayerScripts/Main.Controls.Mouse.module.lua
 src/game/StarterPlayer/StarterPlayerScripts/Main.Controls.module.lua
