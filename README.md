@@ -105,7 +105,7 @@ function ClientTest:Start()
 	end)
 	
 	-- Example service use:
-	local kills = services.DataService:Get("kills") or 0
+	local points = services.DataService:Get("points") or 0
 		-- That invokes the "Get" method in DataService.Client server-side
   
 end
