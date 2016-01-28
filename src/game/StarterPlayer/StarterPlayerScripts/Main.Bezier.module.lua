@@ -208,7 +208,7 @@ function Bezier.new(...)
 		-- In case 'step' didn't fill path fully, properly handle last remaining point:
 		if (lastI < 1) then
 			local overrideLast = ((1 - lastI) < (step * 0.5))
-			path[#path + (overrideLast and 0 or 1)] = bezier:Get(1)
+			path[#path + (overrideLast and 0 or 1)] = self:Get(1)
 		end
 		return path
 	end
