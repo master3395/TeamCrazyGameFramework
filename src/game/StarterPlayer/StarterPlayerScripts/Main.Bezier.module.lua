@@ -171,7 +171,7 @@ function Bezier.new(...)
 			if (clampRatio) then
 				r = (r < 0 and 0 or r > 1 and 1 or r)
 			end
-			return (1-r) * (1-r)*(1-r)*p0+3*(1-r)*(1-r)*r*p1+3*(1-r)*r*r*p2+r*r*r*p3
+			return (1-r)*(1-r)*(1-r)*p0+3*(1-r)*(1-r)*r*p1+3*(1-r)*r*r*p2+r*r*r*p3
 		end
 	
 	else
