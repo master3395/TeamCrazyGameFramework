@@ -2,6 +2,9 @@
 -- Crazyman32
 -- October 9, 2015
 
+-- Modified January 31, 2016
+	-- Added SetIcon and SetVisible methods 
+
 --[[
 	
 	local mouse = require(this)
@@ -17,12 +20,14 @@
 	
 	METHODS:
 	
-		(IsDown, Project, ProjectFromCharacter)
+		(IsDown, Project, ProjectFromCharacter, Ray, SetIcon, SetVisible)
 		
 		Boolean isDown:                           mouse:IsDown(UserInputType button)
 		CFrame hit, Part target, Vector3 normal:  mouse:Project([Number maxDistance = 999, Table ignoreListOverride])
 		CFrame hit, Part target, Vector3 normal:  mouse:ProjectFromCharacter([Number maxDistance = 999, Table ignoreListOverride])
 		Ray mouseRay:                             mouse:Ray()
+		void:                                     mouse:SetIcon(String imageIcon)
+		void:                                     mouse:SetVisible(Boolean isVisible)
 	
 	
 	EVENTS:
@@ -44,6 +49,13 @@ local Mouse = {
 	Y = 0;
 	Ignore = {};
 }
+
+local player = game.Players.LocalPlayer
+local iconGui = Instance.new("ScreenGui")
+	iconGui.Name = "IconGui"
+	local iconImg = Instance.new("ImageLabel", iconGui)
+	iconImg.Name = "Icon"
+	iconImg.BackgroundTransparency = 1
 
 local userInput = game:GetService("UserInputService")
 
@@ -78,7 +90,6 @@ Mouse.Scrolled    = onScrolled.Event
 -- Projections:
 do
 	
-	local player = game.Players.LocalPlayer
 	local workspace = game.Workspace
 	local findPartOnRayWithIgnoreList = workspace.FindPartOnRayWithIgnoreList
 	local cam = game.Workspace.CurrentCamera
@@ -129,6 +140,16 @@ end
 
 function Mouse:IsDown(button)
 	return buttonDown[button]
+end
+
+
+function Mouse:SetIcon(assetId)
+	player:GetMouse().Icon = assetId
+end
+
+
+function Mouse:SetVisible(isVisible)
+	userInput.MouseIconEnabled = isVisible
 end
 
 
