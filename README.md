@@ -6,7 +6,7 @@ The big idea is to introduce a service-like approach server-side, so that servic
 allow creation of server-side methods *and* client-side methods. The services can see each other, thus can invoke methods from
 each other.
 
-On the client, modules are used to help code modules stay in communication with each other. These modules also have access to the custom-built
+On the client, modules are used to help client code to stay in communication with each other. These modules also have access to the custom-built
 server services. When a service exposes a client method, the client can invoke that method directly. No more fiddling with creating
 and configuring RemoteFunctions and RemoteEvents! This framework takes care of all that messy work behind the scenes.
 
@@ -19,7 +19,7 @@ h.HttpEnabled = true
 loadstring(h:GetAsync("https://raw.githubusercontent.com/Sleitnick/TeamCrazyGameFramework/master/install.min.lua"))()
 h.HttpEnabled = e
 ```
-Running this code again will download new code and update the source code of existing framework scripts to the newest versions.
+Running this code again will download new code and update the source code of existing framework scripts to the newest versions. Please note that doing so will override any changes you have made in the core modules in this framework. If you have made changes to the core modules, be sure to keep a copy of those changes before updating.
 
 ## Services
 Creating server-side services is easy. Navigate to the `ServerScriptService.Services` and create a new ModuleScript. The name of
