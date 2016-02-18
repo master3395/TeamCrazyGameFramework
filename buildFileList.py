@@ -17,3 +17,5 @@ for match in regex.finditer(out):
 #Write file:
 filelist = open("filelist.txt", "w")
 filelist.write("\n".join(str(x) for x in filenames))
+
+print("filelist.txt successfully built")
