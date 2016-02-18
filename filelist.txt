@@ -17,6 +17,7 @@ src/game/StarterPlayer/StarterPlayerScripts/Main.Damping.module.lua
 src/game/StarterPlayer/StarterPlayerScripts/Main.Example.module.lua
 src/game/StarterPlayer/StarterPlayerScripts/Main.ListenerList.module.lua
 src/game/StarterPlayer/StarterPlayerScripts/Main.Sound.module.lua
+src/game/StarterPlayer/StarterPlayerScripts/Main.TaskScheduler.module.lua
 src/game/StarterPlayer/StarterPlayerScripts/Main.Tween.Easing.module.lua
 src/game/StarterPlayer/StarterPlayerScripts/Main.Tween.module.lua
 src/game/StarterPlayer/StarterPlayerScripts/Main.local.lua
