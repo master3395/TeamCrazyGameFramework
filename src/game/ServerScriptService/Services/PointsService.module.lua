@@ -49,7 +49,6 @@ function PointsService:SetPoints(player, points)
 	if (difference ~= 0) then
 		services.DataService:Set(player, POINTS_KEY, points)
 		self.Client.Events.PointsChanged:FireClient(player, points)
-		player:WaitForChild("leaderstats"):WaitForChild("Points").Value = points
 		if (player.UserId > 0) then
 			local awardSuccess, err = pcall(function()
 				ptsService:AwardPoints(player.UserId, difference)
@@ -75,14 +74,13 @@ end
 
 function PointsService:Start()
 	local function PlayerAdded(player)
-		local pts = player:WaitForChild("leaderstats"):WaitForChild("Points")
-		pts.Value = self:GetPoints(player)
-		realPoints[player] = pts.Value
+		local pts = self:GetPoints(player)
+		realPoints[player] = pts
 		if (player.UserId > 0) then
 			local realPts = ptsService:GetGamePointBalance(player.UserId)
-			if (realPts ~= pts.Value) then
+			if (realPts ~= pts) then
 				local awardSuccess, err = pcall(function()
-					ptsService:AwardPoints(player.UserId, (pts.Value - realPts))
+					ptsService:AwardPoints(player.UserId, (pts - realPts))
 				end)
 				if (not awardSuccess) then
 					warn("Failed to award points: " .. tostring(err))
