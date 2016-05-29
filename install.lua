@@ -14,6 +14,15 @@ local originallyEnabled = http.HttpEnabled
 http.HttpEnabled = true
 
 
+-------------------------------------------------------------------------------
+-- Game configuration:
+
+game.Workspace.FilteringEnabled = true
+game.StarterGui.ResetPlayerGuiOnSpawn = false
+
+-------------------------------------------------------------------------------
+-- Build GUI:
+
 local loadingGui = Instance.new("ScreenGui")
 	loadingGui.Name = "TeamCrazyGameFrameworkLoadingGui"
 	loadingGui.Archivable = false
@@ -57,6 +66,8 @@ local loadingGui = Instance.new("ScreenGui")
 	
 loadingGui.Parent = game:GetService("CoreGui")
 
+-------------------------------------------------------------------------------
+-- Get file list:
 
 local filelistUrl = "https://raw.githubusercontent.com/Sleitnick/TeamCrazyGameFramework/master/filelist.txt"
 local filelistStr = http:GetAsync(filelistUrl, true)
@@ -75,6 +86,8 @@ filelist = SplitString(filelistStr, "\n")
 table.sort(filelist, function(a, b)
 	return (#a < #b)
 end)
+
+-------------------------------------------------------------------------------
 
 --print(("\nDownloading %i file%s...\n"):format(#filelist, #filelist == 1 and "" or "s"))
 labelGui.Text = ("Downloading %i file%s...\n"):format(#filelist, #filelist == 1 and "" or "s")
@@ -121,6 +134,7 @@ local function DownloadSource(s, path)
 end
 
 
+-- Create scripts from file list:
 local numFiles = #filelist
 for i,path in pairs(filelist) do
 	local s = CreateScript(path)
