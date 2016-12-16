@@ -1,5 +1,4 @@
 src/game/ReplicatedStorage/RemoteServices/Services.module.lua
-src/game/ServerScriptService/Core/GameClosing.script.lua
 src/game/ServerScriptService/Services/DataService.DataCache.module.lua
 src/game/ServerScriptService/Services/DataService.FailSafe.module.lua
 src/game/ServerScriptService/Services/DataService.SafeDataStore.MockDataStoreService.module.lua

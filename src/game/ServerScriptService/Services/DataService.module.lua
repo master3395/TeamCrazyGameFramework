@@ -10,8 +10,6 @@
 		DataService:Get(player, key)
 		DataService:Save(player, key)
 		DataService:SaveAll(player)
-		DataService:SetCustom(name, scope, key, value)
-		DataService:GetCustom(name, scope, key)
 		
 		DataService.DataStoreFail(failMesage)
 		DataService.DataStoreWorking()
@@ -111,16 +109,6 @@ DataService.Client.Events = {
 	"Save";
 	"SaveAll";
 }
-
-
-function DataService:SetCustom(name, scope, key, value)
-	
-end
-
-
-function DataService:GetCustom(name, scope, key)
-	
-end
 
 
 function DataService:Set(player, key, value)
@@ -225,9 +213,7 @@ do
 	game.Players.PlayerRemoving:connect(PlayerRemoving)
 	
 	-- Auto-save on server shutdown:
-	while (not _G.OnClose) do wait() end
-	local gameClosing = false
-	_G.OnClose:connect(function()
+	game:BindToClose(function()
 		gameClosing = true
 		AutoSaveForAll(true)
 	end)
