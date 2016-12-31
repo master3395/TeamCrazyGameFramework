@@ -2,6 +2,8 @@
 -- Crazyman32
 -- December 1, 2015
 
+-- Updated: December 31, 2016
+
 --[[
 	
 	Server:
@@ -48,6 +50,7 @@ function IncrementPurchase(player, productId)
 	end
 	local n = productPurchases[productId]
 	productPurchases[productId] = (n and (n + 1) or 1)
+	services.DataService:Save(player, "ProductPurchases")
 end
 
 
@@ -63,6 +66,8 @@ function ProcessReceipt(receiptInfo)
 			CurrencySpent          [Number]
 	--]]
 	
+	local player = game.Players:GetPlayerByUserId(receiptInfo.PlayerId)
+	
 	local dataStoreName = tostring(receiptInfo.PlayerId)
 	local key = tostring(receiptInfo.PurchaseId)
 	
@@ -70,16 +75,15 @@ function ProcessReceipt(receiptInfo)
 	local alreadyPurchased = services.DataService:GetCustom(dataStoreName, dataStoreScope, key)
 	
 	if (not alreadyPurchased) then
-		local player = game.Players:GetPlayerByUserId(receiptInfo.PlayerId)
-		if (player) then
-			IncrementPurchase(player, receiptInfo.ProductId)
-			
-			-- TODO: Do what needs to be done to complete transaction
-			
-			StoreService.PromptPurchaseFinished:Fire(player, receiptInfo)
-			StoreService.Client.Events.PromptPurchaseFinished:FireClient(player, receiptInfo)
-		end
-		services.DataService:SetCustom(dataStoreName, dataStoreScope, key, true) -- Mark purchased
+		-- Mark as purchased:
+		services.DataService:SetCustom(dataStoreName, dataStoreScope, key, true)
+		services.DataService:SaveCustom(dataStoreName, dataStoreScope, key)
+	end
+	
+	if (player) then
+		IncrementPurchase(player, receiptInfo.ProductId)
+		StoreService.PromptPurchaseFinished:Fire(player, receiptInfo)
+		StoreService.Client.Events.PromptPurchaseFinished:FireClient(player, receiptInfo)
 	end
 	
 	return Enum.ProductPurchaseDecision.PurchaseGranted
