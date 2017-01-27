@@ -1,9 +1,7 @@
 -- Damping
 -- Crazyman32
 -- September 30, 2015
-
--- Updated: December 28, 2016
---   Added UpdateAngle()
+-- Updated: January 1, 2017
 
 
 --[[
@@ -18,7 +16,7 @@
 	damping.Goal = Vector3
 	
 	damping:Update()      [Returns Vector3 position]
-	damping:UpdateAngle() [Returns Vector3 position, but each XYZ value is wrapped properly for 360-degree motion]
+	damping:UpdateAngle() [Returns Vector3 position, but each XYZ value is wrapped properly for pi*2 motion]
 	
 	
 	
@@ -44,6 +42,16 @@
 		
 	end
 	
+	
+	
+	ALGORITHM:
+		
+		velocity += P * ( (target - current) + D * -velocity );
+		current += velocity * dt;
+		
+		Credit: http://www.gamedev.net/topic/561981-smooth-value-damping/
+	
+	
 --]]
 
 
@@ -51,33 +59,25 @@ local Damping = {}
 Damping.__index = Damping
 
 local V3 = Vector3.new
-local FLOOR = math.floor
+local PI = math.pi
+local TAU = PI * 2
 local tick = tick
 
 
--- Safe-check for NAN values:
 local function CheckNAN(value, returnIfNan)
 	return (value == value and value or returnIfNan)
 end
 
 
--- Wrap value 't' around 'length':
-local function Repeat(t, length)
-	return (t % length)
-end
-
-
--- Delta angle:
 local function DeltaAngle(current, target)
-	local num = Repeat(target - current, 360)
-	if (num > 180) then
-		num = (num - 360)
+	local num = (target - current) % TAU
+	if (num > PI) then
+		num = (num - TAU)
 	end
 	return num
 end
 
 
--- Delta angle for each individual XYZ field:
 local function DeltaAngleV3(pos1, pos2)
 	local x = DeltaAngle(pos1.X, pos2.X)
 	local y = DeltaAngle(pos1.Y, pos2.Y)
@@ -109,9 +109,6 @@ end
 
 
 function Damping:Update()
-	--    velocity  += P * ( (target - current) + D * -velocity );
-	--    current   += velocity * dt;
-	-- Source: http://www.gamedev.net/topic/561981-smooth-value-damping/
 	local t = tick()
 	local dt = (t - self.Last)
 	self.Last = t
